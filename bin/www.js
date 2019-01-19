@@ -4,7 +4,7 @@ const app = require('../app.js');
 const server = Http.createServer(app);
 
 // Getting the port from the process environment or use 3000
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5000;
 
 
 server.listen(port, () => {
@@ -16,7 +16,7 @@ server.on('error', onError)
 // Error handling on Server start
 
 function onError(error) {
-    if (err.code == "EADDRINUSE") {
+    if (error.code == "EADDRINUSE") {
         console.error(`${port} : Already in use. Try again after some time..`);
         return;
 
