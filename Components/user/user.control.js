@@ -14,23 +14,36 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/signin', (req, res) => {
-    const username = req.params.username;
-    const password = req.params.password;
+
+    // Extrac username and the password from the REQUEST body
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if (username != undefined && password != undefined) {
+        const user_authentiaction = authenticateUser(username, password);
+
+        if (user_authentiaction.status) {
+
+        } else {
+            res.json(user_authentiaction);
+        }
+    }
 
 });
 
 router.post('/signup', (req, res) => {
 
-    // Console.log(req)
+    // Extract user details from REQUEST body
     const username = req.body.username;
     const password = req.body.password;
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
 
-    // User input validation
+    // User input validation    
     if (username != undefined && password != undefined && first_name != undefined && last_name != undefined) {
 
-        if (checkUsernameAvailability(username)) {
+        // Check for the username uniqueness 
+        if (!checkUsernameAvailability(username)) {
             const user = {
                 'username': username,
                 'password': password,
@@ -38,7 +51,6 @@ router.post('/signup', (req, res) => {
                 'last_name': last_name
             }
 
-            console.log("Saving new user :" + JSON.stringify(user))
             const new_user = saveUser(user);
 
             if (new_user) {

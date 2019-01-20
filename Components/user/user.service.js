@@ -1,7 +1,22 @@
 const User = require('./user.model');
+const bcrypt = require('bcrypt');
 
 // Authenticate a user
-function authenticate(username, password) {
+async function authenticate(username, password) {
+
+    User.find({ username: username }, (err, user) => {
+        if (err) handleError(err);
+
+        if (user) {
+            const match = await bcrypt.compare(password, user.password);
+            if (match) return { status: true, message: user };
+
+            return { status: false, message: "wrong password" }
+
+        } else {
+            return {status: false, message : "user not found"}
+        }
+    });
 
 }
 
@@ -13,9 +28,9 @@ function allUsers() {
 // Adding a new user
 async function insertUser(user) {
     const new_user = new User(user);
-    new_user.save((err) => {
+    new_user.save((err, user) => {
         if (err) handleError(err)
-        return true;
+        return user;
     });
 }
 
@@ -24,19 +39,15 @@ async function user(username) {
     console.log("checking username availability " + username)
     User.findOne({ username: username }, 'username', (err, user) => {
 
-        if (err) {
-            console.error('Error ocured while checking for username validity');
+        if (err) handleError(err);
+        return user;
 
-        } else if (user) {
-
-            console.log(user)
-            return false;
-
-        } else {
-            return true;
-
-        }
     });
+}
+
+// errorHandaling function
+function handleError(error) {
+    console.error(err);
 }
 
 module.exports = {
