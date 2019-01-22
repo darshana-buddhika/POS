@@ -1,23 +1,12 @@
 const User = require('./user.model');
 const bcrypt = require('bcrypt');
 
-// Authenticate a user
-async function authenticate(username, password) {
-
-    User.find({ username: username }, (err, user) => {
-        if (err) handleError(err);
-
-        if (user) {
-            const match = await bcrypt.compare(password, user.password);
-            if (match) return { status: true, message: user };
-
-            return { status: false, message: "wrong password" }
-
-        } else {
-            return {status: false, message : "user not found"}
-        }
-    });
-
+const Admin  = {
+    id : "1",
+    username : "Admin",
+    password : "Admin@123",
+    first_name : "Darshana",
+    last_name : "Buddhika"
 }
 
 // Get all the users in the system
@@ -25,24 +14,44 @@ function allUsers() {
 
 }
 
-// Adding a new user
-async function insertUser(user) {
-    const new_user = new User(user);
-    new_user.save((err, user) => {
-        if (err) handleError(err)
-        return user;
-    });
+function authenticatePromise(username, password) {
+
+    if (username == Admin.username && password == Admin.password) {
+        
+        return {status : 200, message : Admin}
+    }else {
+        return {status: 400, message : "username or password incorrect"}
+    }
 }
 
-// Check user name availability
-async function user(username) {
-    console.log("checking username availability " + username)
-    User.findOne({ username: username }, 'username', (err, user) => {
+// Adding a new user
+// async function insertUser(user) {
+//     const new_user = new User(user);
+//     await usernameCheck(user.username).then(response => {
+//         console.log(response)
+//         if (response.message) {
+//             console.log("isde if block")
+//             new_user.save((err) => {
+//                 console.log("saving user")
+//                 if (err) handleError(err)
+//                 return true;
+//             });
+//         }
+//     })
+// }
 
-        if (err) handleError(err);
-        return user;
+function usernameCheck(username) {
+    console.log("check for username")
+    return new Promise((resolve, reject) => {
+        User.findOne({ username: username }, 'username', (err, user) => {
+            if (err) reject({ status: 500, message: err });
 
-    });
+            if (user) resolve({ status: 200, message: false });
+
+            resolve({ status: 200, message: true })
+
+        });
+    })
 }
 
 // errorHandaling function
@@ -51,8 +60,7 @@ function handleError(error) {
 }
 
 module.exports = {
-    "authenticateUser": authenticate,
-    "getAllUsers": allUsers,
-    "checkUsernameAvailability": user,
-    "saveUser": insertUser
+    "authenticateUser": authenticatePromise,
+    "getAllUsers": allUsers
 }
+

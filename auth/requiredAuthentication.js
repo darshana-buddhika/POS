@@ -1,29 +1,11 @@
-const express = require('express');
-const protectedRoutes = express.Router();
+
 const jwt = require('jsonwebtoken');
 const { secret } = require('../config');
 
-async function createToken(user) {
-    jwt.sign({
-        user_id = user._id,
-        username: user.username,
-        first_name: user.first_name,
-        second_name: user.second_name
-    },
-        secret, {
-            expiresIn: '24h'
-        },
-        (err, token) => {
-            if (err) console.log('Error happen when creating the token');
 
-            return token;
-        });
 
-};
-
-protectedRoutes.use((req, res, next) => {
-
-    // Check if the request header has the token
+// Check if the request header has the token
+function protectedRoutes(req, res, next) {
     const header = req.headers['authorization'];
     if (typeof header != 'undefined') {
 
@@ -36,28 +18,50 @@ protectedRoutes.use((req, res, next) => {
                 if (err) {
                     console.log("Invalid JWT");
                     return res.json({
-                        "status": false,
-                        "message": "JWT not valid"
+                        "status": 401,
+                        "message": "token not valied"
 
                     });
                 } else {
                     console.log("Token verified!");
                     req.decoded = decoded;
-                    next();
+                    return next();
                 }
             })
         }
     }
     else {
-        return res.json({
+        res.json({
             "status": 403,
             "message": "JWT not provided"
         });
     }
 
-})
+}
+
+// Creating a new auth token
+function createToken(user) {
+    return new Promise((resolve, reject) => {
+        jwt.sign({
+            user_id : user.id,
+            username: user.username,
+            first_name: user.first_name,
+            second_name: user.second_name
+        },
+            secret, {
+                expiresIn: '24h'
+            },
+            (err, token) => {
+                if (err) reject({ status: 500, message: "Error occured while sign the token" });
+
+                resolve({ status: 200, message: token });
+            });
+    })
+};
 
 
 
-module.exports = protectedRoutes;
-module.exports = createToken;
+module.exports = {
+    "authRoute": protectedRoutes,
+    "getToken": createToken
+}

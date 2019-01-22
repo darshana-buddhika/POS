@@ -1,82 +1,37 @@
 const express = require('express');
-const router = express.Router();
+const userRouter = express.Router();
 
-const protectedRoute = require('../../auth/requiredAuthentication');
+const { getToken } = require('../../auth/requiredAuthentication');
 
-const { authenticateUser, getAllUsers, checkUsernameAvailability, saveUser } = require('./user.service');
+const { authenticateUser, getAllUsers } = require('./user.service');
 
 // Sign in & Sign up routes is not protected
 
-router.get('/test', (req, res) => {
-    res.json({
-        message: "test"
-    })
-})
-
-router.post('/signin', (req, res) => {
+userRouter.post('/signin', (req, res) => {
 
     // Extrac username and the password from the REQUEST body
     const username = req.body.username;
     const password = req.body.password;
 
     if (username != undefined && password != undefined) {
-        const user_authentiaction = authenticateUser(username, password);
+        console.log(req.body)
+        const user_response = authenticateUser(username, password);
 
-        if (user_authentiaction.status) {
+        if (user_response.status == 200) {
 
-        } else {
-            res.json(user_authentiaction);
-        }
-    }
+            getToken(user_response.message)
+                .then(sign_token => {
 
-});
-
-router.post('/signup', (req, res) => {
-
-    // Extract user details from REQUEST body
-    const username = req.body.username;
-    const password = req.body.password;
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
-
-    // User input validation    
-    if (username != undefined && password != undefined && first_name != undefined && last_name != undefined) {
-
-        // Check for the username uniqueness 
-        if (!checkUsernameAvailability(username)) {
-            const user = {
-                'username': username,
-                'password': password,
-                'first_name': first_name,
-                'last_name': last_name
-            }
-
-            const new_user = saveUser(user);
-
-            if (new_user) {
-                res.json({
-                    status: true,
-                    user: new_user
-                });
-            } else {
-                res.json({
-                    status: false,
-                    message: ""
+                    user_response.token = sign_token.message;
+                    res.json(user_response);
                 })
-            }
+                .catch(err => res.json(token))
+        } else {
+            res.json(user_response);
         }
-    } else {
-        res.json({
-            status: false,
-            message: "User details not provided"
-        })
     }
+
 });
 
-// All the other routes are protected
 
-router.use(protectedRoute);
-
-
-
-module.exports = router;
+module.exports = userRouter;

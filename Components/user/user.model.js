@@ -4,6 +4,14 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const Admin  = {
+    id : "1",
+    username : "Admin",
+    password : "Admin@123",
+    first_name : "Darshana",
+    last_name : "Buddhika"
+}
+
 const user = new Schema(
     {
         username: { type: String, unique: true, required: true },
@@ -28,10 +36,13 @@ user.pre('save', (next) => {
             } else {
 
                 // Replace the plain text password with the HASH
+                console.log("ajfjfiaajfajfjal")
                 this.password = hash;
             }
         });
     }
+
+
 });
 
 module.exports = mongoose.model('User', user);
