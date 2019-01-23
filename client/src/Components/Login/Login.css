@@ -4,10 +4,11 @@
     padding: 2.5rem;
     font-size: 30px;
     border: 1px solid #ccc;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.25);
 }
 form {
     margin: 0 auto;
-    border-block-end-color: 
+
 }
 
 form div {
@@ -42,18 +43,26 @@ form button {
     width: 100px;
     padding: 1rem;
     font-size: 18px;
-    border: 1px solid #95bcf9;
+    border: 1px none;
     border-radius: .5rem;
     background: #95bcf9;
     outline: none;
     margin-left: 2.9rem;
     display: inline-block;
+    transition: ease .2s;
+    color : rgb(59, 59, 59);
     
+}
+
+form button:hover {
+    background : #ccc;
+    color: black;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.25);
 }
 
 form p {
     font-size: 16px;
     display: inline;
     color: red;
-    margin-left: 20px;
+    margin-left: 10px;
 }
