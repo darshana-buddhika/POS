@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import './OrderItem.css'
+import './OrderListItem.css'
 
-class OrderItem extends Component {
+class OrderListItem extends Component {
     constructor() {
         super()
         this.state = {
@@ -22,4 +22,4 @@ class OrderItem extends Component {
 }
 
 
-export default OrderItem
+export default OrderListItem

@@ -1,6 +1,6 @@
 const express = require('express');
 const orderRoutes = express.Router();
-const { getOrders, addOrder, updateItem, removeItem, addItem } = require('./order.services');
+const { getOrder, getOrders, addOrder, updateItem, removeItem, addItem } = require('./order.services');
 
 orderRoutes.get('/', (req, res) => {
     console.log(req.decoded)
@@ -8,6 +8,27 @@ orderRoutes.get('/', (req, res) => {
 
     if (user_id) {
         getOrders(user_id)
+            .then((response) => {
+                res.json(response)
+            })
+            .catch(err => res.json({ status: 500, message: err }))
+
+    } else {
+        // error handle
+        console.log("No user id in the decoded token")
+    }
+});
+
+
+orderRoutes.get('/:id', (req, res) => {
+
+    const user_id = req.decoded.user_id;
+    const order_id = req.params.id;
+
+    console.log("sjfhlsfjsafjhakshfjshkfhkjshfjkshfhkshfhsk")
+
+    if (user_id) {
+        getOrder(user_id, order_id)
             .then((response) => {
                 res.json(response)
             })
@@ -30,7 +51,7 @@ orderRoutes.post('/addOrder', (req, res) => {
             .then((response) => {
                 if (response) {
                     // console.log(response);
-                    res.json(response);
+                    res.json({ status: 200, message: response });
 
                 } else {
                     res.json({ status: 500, message: "Server error" })

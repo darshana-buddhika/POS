@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 import './App.css';
 import Login from './Components/Login/Login'
 import NavBar from './Components/NavBar/NavBar'
 import Orders from './Components/Orders/Orders'
+import Order from './Components/Order/Order'
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      user: '',
-      token: '',
-      orders: [],
-      login_state: false
-    }
+  //   this.state = {
+  //     token: ''
+  //   }
 
-  }
+
   addOrder = () => {
 
     const new_order = {
@@ -26,12 +25,12 @@ class App extends Component {
     }
     this.state.orders.length == 0 ? new_order.id = 1 : new_order.id = this.state.orders[this.state.orders.length - 1].id + 1
 
-    axios.post('http://localhost:5000/api/order/addOrder',{ order: new_order }, {
+    axios.post('http://localhost:5000/api/order/addOrder', { order: new_order }, {
       headers: {
         Authorization: `Bearar ${this.state.token}`
       }
     })
-      .then((response) => { 
+      .then((response) => {
         this.getOrders()
 
       })
@@ -40,44 +39,24 @@ class App extends Component {
       })
   }
 
-  getOrders = () => {
-
-    axios.get('http://localhost:5000/api/order/', {
-      headers: {
-        Authorization: `Bearar ${this.state.token}`
-      }
-    })
-      .then((response) => {
-     
-        this.setState({ orders: response.data })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  userLogedin = (user, token) => {
-    // console.log(user)
-    this.setState({ user: user, token: token, login_state: true })
-    this.getOrders()
-
-
-  }
-
   render() {
 
     return (
       <div>
-        <NavBar logedIn={this.state.login_state} />
+        <NavBar />
         <div className="content">
+
+
           <div className="wrapper">
-            {
-              !this.state.login_state ? <Login userLogin={this.userLogedin} /> : <Orders orders={this.state.orders} addOrder={this.addOrder} />
-            }
-
-
+            
+              <Route exact path="/" render={() => <Login />} />
+              <Route exact path="/Orders" render={() => <Orders />} />
+              <Route exact path="/orders/:id" render={(props) => <Order order={props} />} />
+  
           </div>
+
         </div>
+
       </div >
     )
 

@@ -8,11 +8,15 @@ class NavBar extends Component {
         return (
             <div className="header">
                 <div className="wrapper">
+
+                    <div className="appName">POS Application</div>
+
                     <ul>
-                        <li>Home</li>
-                        {this.props.logedIn ? <li>Logout</li> : ""} 
-                       
+                        {/* <li>Home</li> */}
+                        {/* {this.props.logedIn ? <li>Logout</li> : ""} */}
+
                     </ul>
+
                 </div>
             </div>
         )

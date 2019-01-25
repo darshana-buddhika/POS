@@ -4,7 +4,7 @@
   "description": "Sample POS application for demo",
   "main": "index.js",
   "scripts": {
-    "start": "node bin/www.js",
+    "start": "nodemon bin/www.js",
     "test": "jest"
   },
   "author": "",

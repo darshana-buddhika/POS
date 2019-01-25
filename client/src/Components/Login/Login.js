@@ -16,11 +16,11 @@ class Login extends Component {
     }
 
 
-    handleAuthentication = (response) => {
-        if (response.status === 400) {
-            this.setState({ error: "*"+response.message })
-        } else if (response.status === 200) {
-            this.props.userLogin(response.message, response.token)
+    handleAuthentication = (data) => {
+        if (data.status === 400) {
+            this.setState({ error: "*"+data.message })
+        } else if (data.status === 200) {
+            localStorage.setItem('token', data.token )
         }
     }
 

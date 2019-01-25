@@ -1,0 +1,19 @@
+.left {
+    float: right;
+
+}
+
+.orderHeaderWrapper {
+    display: block; 
+    justify-content: end;  
+}
+
+.itemList {
+    margin: 1rem auto;
+    max-width: 1000px;
+    
+}
+
+.itemDetils {
+    display: inline-block;
+}

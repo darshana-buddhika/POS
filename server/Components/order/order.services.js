@@ -5,7 +5,22 @@ async function getOrders(user_id) {
 
     try {
         const orders = await Order.find({ user_id: user_id }).exec();
-        return orders;
+        return { status: 200, message: orders };
+
+    } catch (err) {
+        console.error(err);
+        return { status: 500, message: "Server Error" }
+    }
+
+}
+
+// Get all the order from a customer
+async function getOrder(user_id, order_id) {
+
+    try {
+        const order = await Order.findOne({ user_id: user_id, _id: order_id }).exec();
+        console.log(order)
+        return { status: 200, message: order };
 
     } catch (err) {
         console.error(err);
@@ -70,4 +85,4 @@ async function updateItem(user_id, order_id, item) {
 
 }
 
-module.exports = { getOrders, addItem, removeItem, updateItem, addOrder }
+module.exports = { getOrder, getOrders, addItem, removeItem, updateItem, addOrder }
