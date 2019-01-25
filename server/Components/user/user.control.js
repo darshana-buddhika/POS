@@ -14,7 +14,7 @@ userRouter.post('/signin', (req, res) => {
     const password = req.body.password;
 
     if (username != undefined && password != undefined) {
-        console.log(req.body)
+        console.log(req.body)   
         const user_response = authenticateUser(username, password);
 
         if (user_response.status == 200) {

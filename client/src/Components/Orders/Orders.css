@@ -1,0 +1,43 @@
+.orders {
+    padding: 1rem ;
+    /* background:#ccc; */
+    /* width: 100%; */
+    /* height: 100vh; */
+}
+
+.orders .orderHeader {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 100;
+    display: inline-block;
+
+}
+
+.orders hr {
+    margin-bottom: 1rem;
+}
+
+.addOrder button{
+    width: 90px;
+    height: 90px;
+    border: none;
+    border-radius: 50%;
+    background: #f37021;
+    color: aliceblue;
+    box-shadow:  0 3px 6px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.25);
+    font-size: 3rem;
+    transition: ease-in .2s;
+}
+.addOrder {
+    bottom: 0;
+    padding: 1rem 0;
+    width: 100%;    
+}
+.addOrder button:hover{
+   
+    background: #ccc;
+    color: #f37021;
+    box-shadow:  0 4px 8px rgba(0,0,0,0.4), 0 6px 12px rgba(0,0,0,0.3);
+   
+}

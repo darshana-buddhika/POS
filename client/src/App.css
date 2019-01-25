@@ -11,23 +11,5 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1200px;
-  
-}
 
-.header {
-  width: 100%;
-  padding: 1rem 0;
-  background-color: #ccc;
 }
-
-.header ul li{
-  padding: 1rem;
-  display: inline;
-  transition: ease .15s;
-}
-
-.header ul li:hover{
-  background-color: rgb(72, 75, 75);
-  color: #ccc;
-}
-

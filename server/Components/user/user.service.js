@@ -2,7 +2,7 @@ const User = require('./user.model');
 const bcrypt = require('bcrypt');
 
 const Admin  = {
-    id : "1",
+    user_id : "1",
     username : "Admin",
     password : "Admin@123",
     first_name : "Darshana",
@@ -17,28 +17,12 @@ function allUsers() {
 function authenticatePromise(username, password) {
 
     if (username == Admin.username && password == Admin.password) {
-        
-        return {status : 200, message : Admin}
+        const {password, ...user} = Admin;
+        return {status : 200, message : user}
     }else {
-        return {status: 400, message : "username or password incorrect"}
+        return {status: 400, message : "Incorrect Username or Password"}
     }
 }
-
-// Adding a new user
-// async function insertUser(user) {
-//     const new_user = new User(user);
-//     await usernameCheck(user.username).then(response => {
-//         console.log(response)
-//         if (response.message) {
-//             console.log("isde if block")
-//             new_user.save((err) => {
-//                 console.log("saving user")
-//                 if (err) handleError(err)
-//                 return true;
-//             });
-//         }
-//     })
-// }
 
 function usernameCheck(username) {
     console.log("check for username")

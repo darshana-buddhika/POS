@@ -45,12 +45,12 @@ form button {
     font-size: 18px;
     border: 1px none;
     border-radius: .5rem;
-    background: #95bcf9;
+    background: #f37021;
     outline: none;
     margin-left: 2.9rem;
     display: inline-block;
     transition: ease .2s;
-    color : rgb(59, 59, 59);
+    color : #ccc;
     
 }
 

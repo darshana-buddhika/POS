@@ -10,8 +10,8 @@ class NavBar extends Component {
                 <div className="wrapper">
                     <ul>
                         <li>Home</li>
-                        {App.isLogedIn}
-                        <li>Logout</li>
+                        {this.props.logedIn ? <li>Logout</li> : ""} 
+                       
                     </ul>
                 </div>
             </div>

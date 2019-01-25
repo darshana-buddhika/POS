@@ -1,0 +1,29 @@
+.orderItem {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    transition: ease .2s;
+    margin-bottom: 1rem;
+}
+
+.orderId {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 2rem;
+    font-weight: 100;
+    display: inline-block;
+}
+
+.amount {
+    /* line-height: 3.5rem; */
+    font-size: 2.5rem;
+    float: right;
+}
+
+p {
+    display: inline-block;
+}
+
+.orderItem:hover {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.3)
+}

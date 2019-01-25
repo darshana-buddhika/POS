@@ -26,6 +26,12 @@ db.on('error', (e) => {
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Authorization,Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
 app.use('/api/user', user);
 app.use(authRoute)
 app.use('/api/order', order);

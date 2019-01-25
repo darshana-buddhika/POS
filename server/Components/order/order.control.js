@@ -25,6 +25,7 @@ orderRoutes.post('/addOrder', (req, res) => {
 
     if (order) {
         console.log(order, user_id);
+        order.user_id = user_id;
         addOrder(user_id, order)
             .then((response) => {
                 if (response) {

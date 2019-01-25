@@ -41,14 +41,11 @@ function protectedRoutes(req, res, next) {
 
 // Creating a new auth token
 function createToken(user) {
+    const { password, ...new_user } = user;
     return new Promise((resolve, reject) => {
-        jwt.sign({
-            user_id : user.id,
-            username: user.username,
-            first_name: user.first_name,
-            second_name: user.second_name
-        },
-            secret, {
+        jwt.sign(new_user,
+            secret,
+            {
                 expiresIn: '24h'
             },
             (err, token) => {
