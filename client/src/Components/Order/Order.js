@@ -8,21 +8,21 @@ import Item from '../Item/Item'
 // Items that a user can buy
 const Items = [
     {
-        item_name : "Cake",
-        unite_price : 5.00
+        item_name: "Cake",
+        unite_price: 5.00
     },
     {
-        item_name : "Bread",
-        unite_price : 10.00
-    },   {
-        item_name : "Burger",
-        unite_price : 12.00
-    },   {
-        item_name : "Pizza",
-        unite_price : 22.00
-    },   {
-        item_name : "Sandwich",
-        unite_price : 8.00
+        item_name: "Bread",
+        unite_price: 10.00
+    }, {
+        item_name: "Burger",
+        unite_price: 12.00
+    }, {
+        item_name: "Pizza",
+        unite_price: 22.00
+    }, {
+        item_name: "Sandwich",
+        unite_price: 8.00
     },
 ]
 
@@ -31,7 +31,7 @@ class Order extends Component {
         super(props)
 
         this.state = {
-            addNew : false,
+            addNew: true,
             order_amount: 0,
             items: [],
             order: null,
@@ -72,6 +72,15 @@ class Order extends Component {
         // const { id, order_amount, _id } = this.state.order;
         if (this.state.order === null) { return <p>Loading orders...</p> }
 
+        if (this.state.addNew) {
+            return (
+                <div className="addItem">
+                    <select onSelect={this.selectItem} options={Items}>
+                    </select>
+                </div>
+            )
+        }
+
         return (
             <div className="orders">
 
@@ -100,5 +109,6 @@ class Order extends Component {
         )
     }
 }
+
 
 export default Order
