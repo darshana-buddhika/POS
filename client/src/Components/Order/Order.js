@@ -31,7 +31,7 @@ class Order extends Component {
         super(props)
 
         this.state = {
-            addNew: true,
+            addNew: false,
             order_amount: 0,
             items: [],
             order: null,
@@ -66,6 +66,17 @@ class Order extends Component {
 
     }
 
+    handleSelectItem = (event) => {
+        console.log(event.target.value)
+    }
+
+    handleCancel = () => {
+        this.setState({ addNew: false })
+    }
+
+    handleItem = () => {
+        this.setState({ addNew: true })
+    }
 
 
     render() {
@@ -75,8 +86,23 @@ class Order extends Component {
         if (this.state.addNew) {
             return (
                 <div className="addItem">
-                    <select onSelect={this.selectItem} options={Items}>
-                    </select>
+                    <h1>Add New Item</h1>
+
+                    <div className="addItemForm">
+                        <label>Item</label>
+                        <select onChange={this.handleSelectItem}>
+                            {Items.map((item, index) => {
+                                return <option key={index} value={item.item_name}>{item.item_name}</option>
+                            })}
+                        </select>
+                        <lable>Quantity </lable>
+                        <input onChange={this.props.handleQuntityChange}></input>
+
+                        <div className="buttons">
+                            <button onClick={this.handleAddItem}>Add</button>
+                            <button className="left" onClick={this.handleCancel}>Cancel</button>
+                        </div>
+                    </div>
                 </div>
             )
         }
@@ -96,7 +122,7 @@ class Order extends Component {
                         }) : ""}
                     </div>
                     <div className="addOrder">
-                        <button onClick={this.Item}>+</button>
+                        <button onClick={this.handleItem}>+</button>
                     </div>
 
                     {this.state.error != "" ? <div className="error">{this.state.error}</div> : ""}
@@ -105,7 +131,6 @@ class Order extends Component {
 
             </div >
 
-            // { this.state.addNew ? }
         )
     }
 }

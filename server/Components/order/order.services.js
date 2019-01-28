@@ -30,8 +30,8 @@ async function getOrder(user_id, order_id) {
 }
 
 // Add new order
-async function addOrder(user_id, order) {
-
+async function addOrder(order) {
+    console.log(order)
     const new_order = new Order(order);
     try {
         return await new_order.save()

@@ -18,9 +18,9 @@ class Login extends Component {
 
     handleAuthentication = (data) => {
         if (data.status === 400) {
-            this.setState({ error: "*"+data.message })
+            this.setState({ error: "*" + data.message })
         } else if (data.status === 200) {
-            localStorage.setItem('token', data.token )
+            localStorage.setItem('token', data.token)
         }
     }
 
@@ -45,9 +45,12 @@ class Login extends Component {
 
     }
 
-    handleChange = (event) => {
+    handlePasswordChange = (event) => {
+        this.setState({ password: event.target.value })
+    }
 
-        this.setState({ [event.target.name]: event.target.value })
+    handleUsernameChange = (event) => {
+        this.setState({ username: event.target.value })
     }
 
     render() {
@@ -58,12 +61,12 @@ class Login extends Component {
                 < form >
                     <div>
                         <label >Username</label>
-                        <input type="text" name="username" value={this.state.username} onChange={this.handleChange}></input>
+                        <input type="text" name="username" value={this.state.username} onChange={this.handleUsernameChange}></input>
 
                     </div>
                     <div>
                         <label>Password</label>
-                        <input type="password" name="password" value={this.state.password} onChange={this.handleChange}></input>
+                        <input type="password" name="password" value={this.state.password} onChange={this.handlePasswordChange}></input>
 
                     </div>
                     <div className="submit">

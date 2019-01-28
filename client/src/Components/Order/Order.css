@@ -17,3 +17,42 @@
 .itemDetils {
     display: inline-block;
 }
+
+.addItem {
+    width: 600px;
+    /* height: 400px; */
+    position: absolute;
+    padding: 3rem;
+    background: #ccc;
+    z-index: 10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.addItemForm {
+width: 100%;
+padding : 2rem;
+}
+
+select {
+    /* width: %; */
+    display: inline-block;
+    padding: 1rem;
+    border: 1px solid #ccc;
+}
+
+.buttons {
+    width: 100%;
+    display: block;
+    padding: 2rem;
+}
+
+.buttons button {
+    border: 1px solid #f37021;
+    padding: 2rem;
+    font-size: 2rem;
+    background: #f37021;
+    color: aliceblue;
+    box-shadow:  0 3px 6px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.25);
+}

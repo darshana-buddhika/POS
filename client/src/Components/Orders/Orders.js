@@ -36,7 +36,9 @@ class Orders extends Component {
     }
 
     handleOrderResponse = (data) => {
-        data.status === 200 ? this.setState({ orders: data.message }) : this.setState({ error: data.message })
+        const orders = data.message.sort((a, b) => a.id > b.id ? 1 : -1);
+        console.log(orders)
+        data.status === 200 ? this.setState({ orders: data.message }) : this.setState({ error: orders })
     }
 
     getOrders = () => {
@@ -66,7 +68,7 @@ class Orders extends Component {
 
                 {this.state.orders === [] ? <p>Loading orders...</p> :
                     this.state.orders.map((order, index) => {
-                        return <Link to={`/orders/${order._id}`}><OrderListItem key={index} order={order} /></Link>
+                        return <Link key={index} to={`/orders/${order._id}`}><OrderListItem order={order} /></Link>
                     })}
                 <div className="addOrder">
                     <button onClick={this.addOrder}>+</button>
