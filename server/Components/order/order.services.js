@@ -1,6 +1,6 @@
 const Order = require('./order.model');
 
-// Get all the order from a customer
+// Get all the Orders from a customer
 async function getOrders(user_id) {
 
     try {
@@ -14,7 +14,7 @@ async function getOrders(user_id) {
 
 }
 
-// Get all the order from a customer
+// Get a order from a customer
 async function getOrder(user_id, order_id) {
 
     try {
@@ -44,11 +44,11 @@ async function addOrder(order) {
 }
 
 // Add new item to a order
-async function addItem(user_id, order_id, item) {
+async function addItem(user_id, order_id, item, new_total) {
 
     try {
-        const order = await Order.findOneAndUpdate({ user_id: user_id, _id: order_id }, { $push: { items: item } }, { new: true }).exec();
-        return order;
+        const order = await Order.findOneAndUpdate({ user_id: user_id, _id: order_id }, { $push: { items: item }, $set: { order_amount: new_total } }, { new: true }).exec();
+        return { status: 200, message: order };
 
     } catch (err) {
         console.error(err);

@@ -8,7 +8,7 @@ const order = Schema(
         user_id: { type: Number, require: true },
         items: [{
             item_name: { type: String, },
-            item_quntity: { type: String, },
+            item_quantity: { type: String, },
             item_price: { type: Number, }
         }],
         order_amount: { type: Number, default: 0 },

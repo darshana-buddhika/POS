@@ -67,9 +67,10 @@ orderRoutes.post('/:order_id/addItem', (req, res) => {
     const order_id = req.params.order_id;
     const user_id = req.decoded.user_id;
     const item = req.body.item;
+    const new_total = req.body.new_total;
 
     if (order_id && item) {
-        const order = addItem(user_id, order_id, item);
+        const order = addItem(user_id, order_id, item, new_total);
 
         order.then((response) => {
             console.log(response)

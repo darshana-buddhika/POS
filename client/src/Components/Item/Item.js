@@ -5,15 +5,16 @@ import './Item.css'
 class Item extends Component {
     constructor(props) {
         super(props)
+        console.log(this.props.item)
         this.state = {
-            quntity : props.item.item_quntity,
+            quantity : props.item.item_quantity,
             unit_price : props.item.item_price,
             total_price : ""
         }
     }
     componentDidMount(){
-        const {quntity , unit_price} = this.state
-        this.setState({total_price : quntity*unit_price})
+        const {quantity , unit_price} = this.state
+        this.setState({total_price : quantity*unit_price})
     }
     render() {
         return (

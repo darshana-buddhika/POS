@@ -4,33 +4,15 @@ import axios from 'axios'
 import './Order.css'
 
 import Item from '../Item/Item'
+import AddItem from '../Item/AddItem'
 
-// Items that a user can buy
-const Items = [
-    {
-        item_name: "Cake",
-        unite_price: 5.00
-    },
-    {
-        item_name: "Bread",
-        unite_price: 10.00
-    }, {
-        item_name: "Burger",
-        unite_price: 12.00
-    }, {
-        item_name: "Pizza",
-        unite_price: 22.00
-    }, {
-        item_name: "Sandwich",
-        unite_price: 8.00
-    },
-]
 
 class Order extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
+            status : false,
             addNew: false,
             order_amount: 0,
             items: [],
@@ -50,61 +32,57 @@ class Order extends Component {
             .then((response) => {
                 console.log(response.data)
                 const { status, message } = response.data
-                console.log(message.items.length == 0)
-                status == 200 ? this.setState({ order: message }) : this.setState({ error: message })
+
+                status == 200 ? this.setState({ order: message, status :true }) : this.setState({ error: message })
             })
 
     }
-    addItem = () => {
+    addItem = (item, new_total) => {
+        const { match: { params } } = this.props.order;
+        axios.post(`http://localhost:5000/api/order/${params.id}/addItem`, { item: item, new_total: new_total }, {
+            headers: {
+                Authorization: `Bearar ${localStorage.getItem('token')}`
+            }
+        })
+        .then ((response) => {
+            console.log(response.data)
+            response.data.status === 200 ? this.getOrder() : this.setState({error :`Item could not be added ${response.data.message}`})
+        })
+        .catch((error) => console.error(error))
 
     }
 
-
     componentDidMount() {
-
         this.getOrder()
 
     }
 
-    handleSelectItem = (event) => {
-        console.log(event.target.value)
+    handleAddItemButton = () => {
+        this.setState({ addNew: true })
     }
 
+    handleAddItem = (item) => {
+        const { item_name, item_quantity, item_price } = item;
+        console.log(item_name, item_quantity, item_price);
+
+        const current_total = this.state.order.order_amount;
+        const new_total = current_total + item_quantity * item_price;
+
+        this.addItem(item, new_total)
+        this.handleCancel()
+    }
+
+    // Close add Item window
     handleCancel = () => {
         this.setState({ addNew: false })
     }
 
-    handleItem = () => {
-        this.setState({ addNew: true })
-    }
-
-
     render() {
-        // const { id, order_amount, _id } = this.state.order;
-        if (this.state.order === null) { return <p>Loading orders...</p> }
+
+        if (!this.state.status) { return <p>Loading orders...</p> }
 
         if (this.state.addNew) {
-            return (
-                <div className="addItem">
-                    <h1>Add New Item</h1>
-
-                    <div className="addItemForm">
-                        <label>Item</label>
-                        <select onChange={this.handleSelectItem}>
-                            {Items.map((item, index) => {
-                                return <option key={index} value={item.item_name}>{item.item_name}</option>
-                            })}
-                        </select>
-                        <lable>Quantity </lable>
-                        <input onChange={this.props.handleQuntityChange}></input>
-
-                        <div className="buttons">
-                            <button onClick={this.handleAddItem}>Add</button>
-                            <button className="left" onClick={this.handleCancel}>Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            )
+            return <AddItem handleCancel={this.handleCancel} handleAddItem={this.handleAddItem} />
         }
 
         return (
@@ -122,7 +100,7 @@ class Order extends Component {
                         }) : ""}
                     </div>
                     <div className="addOrder">
-                        <button onClick={this.handleItem}>+</button>
+                        <button onClick={this.handleAddItemButton}>+</button>
                     </div>
 
                     {this.state.error != "" ? <div className="error">{this.state.error}</div> : ""}

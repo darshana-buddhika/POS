@@ -9,6 +9,7 @@ class Orders extends Component {
     constructor() {
         super()
         this.state = {
+            status: false,
             orders: [],
             error: ""
         }
@@ -38,16 +39,18 @@ class Orders extends Component {
     handleOrderResponse = (data) => {
         const orders = data.message.sort((a, b) => a.id > b.id ? 1 : -1);
         console.log(orders)
-        data.status === 200 ? this.setState({ orders: data.message }) : this.setState({ error: orders })
+        data.status === 200 ? this.setState({ orders: data.message, status: true }) : this.setState({ error: orders })
     }
 
     getOrders = () => {
+        console.log("GET orders from the users")
         axios.get('http://localhost:5000/api/order/', {
             headers: {
                 Authorization: `Bearar ${localStorage.getItem('token')}`
             }
         })
             .then((response) => {
+                console.log("respose for GET Orders")
                 console.log(response.data)
                 this.handleOrderResponse(response.data);
             })
@@ -61,12 +64,14 @@ class Orders extends Component {
     }
 
     render() {
+
+        console.log(this.state.orders)
         return (
             <div className="orders">
                 <h1 className="orderHeader">Open Orders</h1>
                 <hr />
 
-                {this.state.orders === [] ? <p>Loading orders...</p> :
+                {!this.state.status ? <p>Loading orders...</p> :
                     this.state.orders.map((order, index) => {
                         return <Link key={index} to={`/orders/${order._id}`}><OrderListItem order={order} /></Link>
                     })}
