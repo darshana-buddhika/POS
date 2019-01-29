@@ -35,17 +35,21 @@ class Item extends Component {
 
     render() {
         return (
-            <div className="item">
-                <div className="itemDetails">
-                    <h2>{this.props.item.item_name}</h2>
-                    <h3>Price for one item : ${this.props.item.item_price}</h3>
+            <div className="itemContainer">
+                <div className="item">
+                    <div className="itemDetails">
+                        <h2>{this.props.item.item_name}</h2>
+                        <h3>Price for one item : ${this.props.item.item_price}</h3>
+
+                    </div>
+                    <div className="quantity">
+                        <label>Quantity</label>
+                        <input type="text" value={this.state.quantity} onChange={this.handleChange}></input>
+                    </div>
+                    <div className="left total"> <h1>${this.props.total}.00</h1></div>
 
                 </div>
-                <div className="quantity">
-                    <label>Quantity</label>
-                    <input type="text" value={this.state.quantity} onChange={this.handleChange}></input>
-                </div>
-                <div className="left total"> <h1>${this.props.total}.00</h1></div>
+                <button onClick={() => {this.props.handleDelete(this.props.item, this.props.total)}} className="delete left">Delete</button>
             </div>
         )
     }

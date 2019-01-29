@@ -60,7 +60,7 @@ class Orders extends Component {
             })
     }
 
-    deleteItem = (order_id) => {
+    deleteOrder = (order_id) => {
         axios.delete(`http://localhost:5000/api/order/delete/${order_id}`, {
             headers: {
                 Authorization: `Bearar ${localStorage.getItem('token')}`
@@ -68,7 +68,7 @@ class Orders extends Component {
         })
             .then(response => {
                 console.log(response.data)
-                response.data.status == 200 ? this.getOrders() : this.setState({ error: "Couldnt delete item" })
+                response.data.status == 200 ? this.getOrders() : this.setState({ error: "Couldnt delete Order" })
             })
     }
 
@@ -78,10 +78,10 @@ class Orders extends Component {
         console.log(conf)
 
         if (conf) {
-            this.deleteItem(order_id)
+            this.deleteOrder(order_id)
         }
 
-        // conf ? this.deleteItem(order_id) : ""
+        // conf ? this.deleteOrder(order_id) : ""
         console.log(order_id)
     }
 

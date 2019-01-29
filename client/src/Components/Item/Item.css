@@ -1,10 +1,15 @@
 .item {
-    widows: 100%;
+    width: 85%;
     padding: 1rem .5rem;
     border: 1px solid #ccc;
-    display: block;
+    display: inline-block;
     margin-bottom: 1rem;    
 
+}
+
+.itemContainer {
+    display: inline-block;    
+    width: 100%;
 }
 
 .itemDetails {

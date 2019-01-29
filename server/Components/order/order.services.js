@@ -19,7 +19,7 @@ async function getOrder(user_id, order_id) {
 
     try {
         const order = await Order.findOne({ user_id: user_id, _id: order_id }).exec();
-        console.log(order)
+        // console.log(order)
         return { status: 200, message: order };
 
     } catch (err) {
@@ -31,7 +31,7 @@ async function getOrder(user_id, order_id) {
 
 // Add new order
 async function addOrder(order) {
-    console.log(order)
+    // console.log(order)
     const new_order = new Order(order);
     try {
         return await new_order.save()
@@ -68,11 +68,11 @@ async function addItem(user_id, order_id, item, new_total) {
 }
 
 // Remove item from a order
-async function removeItem(user_id, order_id, item) {
+async function removeItem(user_id, order_id, item, new_total) {
 
     try {
-        console.log("this is the item id",item)
-        const order = await Order.findOneAndUpdate({ user_id: user_id, _id: order_id }, { $pull: { items: { _id: item._id } } }, { new: true, upsert: false }).exec();
+        // console.log("this is the item id", item)
+        const order = await Order.findOneAndUpdate({ user_id: user_id, _id: order_id }, { $pull: { items: { _id: item._id } }, $set: { order_amount: new_total } }, { new: true, upsert: false }).exec();
         // console.log(order)
         return { status: 200, message: order };
 
