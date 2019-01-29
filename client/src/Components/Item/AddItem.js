@@ -56,8 +56,6 @@ class AddItem extends Component {
         }
     }
 
-
-
     render() {
         return (
             <div className="addItem">

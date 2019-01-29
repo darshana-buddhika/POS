@@ -1,6 +1,6 @@
 const express = require('express');
 const orderRoutes = express.Router();
-const { getOrder, getOrders, addOrder, updateItem, removeItem, addItem } = require('./order.services');
+const { getOrder, getOrders, addOrder, updateItem, removeItem, addItem, deleteOrder } = require('./order.services');
 
 orderRoutes.get('/', (req, res) => {
     console.log(req.decoded)
@@ -63,6 +63,17 @@ orderRoutes.post('/addOrder', (req, res) => {
     }
 });
 
+orderRoutes.delete('/delete/:order_id', (req, res) => {
+    const order_id = req.params.order_id
+
+    console.log(order_id)
+    deleteOrder(order_id)
+        .then(response => res.json(response))
+        .catch(err => console.log(err))
+
+
+})
+
 orderRoutes.post('/:order_id/addItem', (req, res) => {
     const order_id = req.params.order_id;
     const user_id = req.decoded.user_id;
@@ -118,9 +129,10 @@ orderRoutes.put('/:order_id/updateItem', (req, res) => {
     const order_id = req.params.order_id;
     const user_id = req.decoded.user_id;
     const item = req.body.item;
+    const new_total = req.body.new_total
 
     if (order_id) {
-        const order = updateItem(user_id, order_id, item)
+        const order = updateItem(user_id, order_id, item,new_total)
 
         order.then((response) => {
             if (response) {

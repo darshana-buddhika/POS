@@ -5,6 +5,7 @@ import axios from 'axios';
 import OrderListItem from '../OrderListItem/OrderListItem'
 import './Orders.css'
 
+
 class Orders extends Component {
     constructor() {
         super()
@@ -59,6 +60,31 @@ class Orders extends Component {
             })
     }
 
+    deleteItem = (order_id) => {
+        axios.delete(`http://localhost:5000/api/order/delete/${order_id}`, {
+            headers: {
+                Authorization: `Bearar ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+                console.log(response.data)
+                response.data.status == 200 ? this.getOrders() : this.setState({ error: "Couldnt delete item" })
+            })
+    }
+
+    handleDelete = (order_id) => {
+        let conf = window.confirm("You sure you wanna delete this?");
+
+        console.log(conf)
+
+        if (conf) {
+            this.deleteItem(order_id)
+        }
+
+        // conf ? this.deleteItem(order_id) : ""
+        console.log(order_id)
+    }
+
     componentDidMount() {
         this.getOrders();
     }
@@ -73,7 +99,7 @@ class Orders extends Component {
 
                 {!this.state.status ? <p>Loading orders...</p> :
                     this.state.orders.map((order, index) => {
-                        return <Link key={index} to={`/orders/${order._id}`}><OrderListItem order={order} /></Link>
+                        return <React.Fragment><Link key={index} to={`/orders/${order._id}`}><OrderListItem order={order} /></Link> <button className="delete" onClick={() => { this.handleDelete(order._id) }}>Delete</button></React.Fragment>
                     })}
                 <div className="addOrder">
                     <button onClick={this.addOrder}>+</button>

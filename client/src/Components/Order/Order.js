@@ -30,11 +30,12 @@ class Order extends Component {
             }
         })
             .then((response) => {
-                console.log(response.data)
+                // console.log(response.data)
                 const { status, message } = response.data
 
-                status == 200 ? this.setState({ order: message, status :true }) : this.setState({ error: message })
+                status === 200 ? this.setState({ order: message, status :true }) : this.setState({ error: message })
             })
+            .catch(err => console.log(err))
 
     }
     addItem = (item, new_total) => {
@@ -45,15 +46,41 @@ class Order extends Component {
             }
         })
         .then ((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             response.data.status === 200 ? this.getOrder() : this.setState({error :`Item could not be added ${response.data.message}`})
         })
         .catch((error) => console.error(error))
 
     }
 
+    updateItem = (item, new_total) => {
+        const { match: { params } } = this.props.order;
+        axios.put(`http://localhost:5000/api/order/${params.id}/updateItem`, { item: item, new_total : new_total }, {
+            headers: {
+                Authorization: `Bearar ${localStorage.getItem('token')}`
+            }
+        })
+        .then ((response) => {
+            console.log(response.data)
+            response.data.status === 200 ? this.getOrder() : this.setState({error :`Item could not be added ${response.data.message}`})
+        })
+        .catch((error) => console.error(error))
+    }
+
     componentDidMount() {
         this.getOrder()
+
+    }
+
+    handleItemUpdate = (item, current_amount) => {
+        const { item_name, item_quantity, item_price } = item;
+
+        let current_total = this.state.order.order_amount;
+        current_total = current_total-current_amount
+        const new_total = current_total + item_quantity * item_price;
+        console.log(new_total)
+        console.log(item)
+        this.updateItem(item, new_total);
 
     }
 
@@ -95,8 +122,8 @@ class Order extends Component {
                     </div>
                     < hr />
                     <div className="itemList">
-                        {this.state.order.items.length != 0 ? this.state.order.items.map((item) => {
-                            return <Item item={item} />
+                        {this.state.order.items.length !== 0 ? this.state.order.items.map((item, index) => {
+                            return <Item onUpdate={this.handleItemUpdate} key={index} item={item} total={item.item_quantity*item.item_price} />
                         }) : ""}
                     </div>
                     <div className="addOrder">
@@ -106,7 +133,7 @@ class Order extends Component {
                     {this.state.error != "" ? <div className="error">{this.state.error}</div> : ""}
 
                 </React.Fragment>
-
+                   
             </div >
 
         )

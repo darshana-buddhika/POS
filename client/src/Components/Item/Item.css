@@ -3,10 +3,38 @@
     padding: 1rem .5rem;
     border: 1px solid #ccc;
     display: block;
-    margin-bottom: 1rem;
+    margin-bottom: 1rem;    
 
 }
 
 .itemDetails {
 display: inline-block;
+}
+
+.itemDetails h2 {
+    display: block;
+    /* width: 100%; */
+}
+.itemDetails h3 {
+    display: block;
+    /* width: 100%; */
+}
+
+.quantity {
+    display: inline-block;
+    margin-left: 2rem;
+    vertical-align: top;
+}
+
+.quantity input {
+    margin-left: 1rem;  
+    border: 1px soild #ccc;
+    padding: .6rem;
+    width: 80px;
+    font-size: 22px;
+
+}
+
+.total {
+    display: inline-block;
 }

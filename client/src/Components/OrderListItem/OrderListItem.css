@@ -1,5 +1,6 @@
 .orderItem {
-    width: 100%;
+    width: 90%;
+    display: inline-block;
     border: 1px solid #ccc;
     padding: 1rem 2rem;
     border-radius: 1rem;
@@ -11,7 +12,20 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 2rem;
     font-weight: 100;
-    display: inline-block;
+    display: inline-flex;
+}
+
+.orderDetails {
+    display: inline-flex;
+    margin-left :2rem;
+}
+
+.orderDetails p {
+    display: block !important;
+    margin-right: 1rem;
+}
+.orderQuantity {
+    display: inline-flex;
 }
 
 .amount {

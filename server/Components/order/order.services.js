@@ -43,6 +43,17 @@ async function addOrder(order) {
 
 }
 
+async function deleteOrder(order_id) {
+    try {
+        const order = await Order.findOne({ _id: order_id }).remove().exec();
+        return { status: 200, message: "Successfully removed" };
+
+    } catch (err) {
+        console.error(err);
+        return { status: 400, message: err.name }
+    }
+}
+
 // Add new item to a order
 async function addItem(user_id, order_id, item, new_total) {
 
@@ -60,9 +71,10 @@ async function addItem(user_id, order_id, item, new_total) {
 async function removeItem(user_id, order_id, item) {
 
     try {
+        console.log("this is the item id",item)
         const order = await Order.findOneAndUpdate({ user_id: user_id, _id: order_id }, { $pull: { items: { _id: item._id } } }, { new: true, upsert: false }).exec();
         // console.log(order)
-        return order;
+        return { status: 200, message: order };
 
     } catch (err) {
         console.error(err);
@@ -72,17 +84,17 @@ async function removeItem(user_id, order_id, item) {
 }
 
 // Update item in the order
-async function updateItem(user_id, order_id, item) {
+async function updateItem(user_id, order_id, item, new_total) {
     // Remove the exsisting item from the array
     const order = await removeItem(user_id, order_id, item);
 
 
     console.log("this is inside update db acces method", order)
     // Add updated item to the array
-    if (order) return addItem(user_id, order_id, item);
+    if (order) return addItem(user_id, order_id, item, new_total);
 
 
 
 }
 
-module.exports = { getOrder, getOrders, addItem, removeItem, updateItem, addOrder }
+module.exports = { getOrder, getOrders, addItem, removeItem, updateItem, addOrder, deleteOrder }
