@@ -10,13 +10,10 @@ import Order from './Components/Order/Order'
 
 class App extends Component {
 
-  // constructor(props) {
-  //   super(props);
 
-  //   this.state = {
-  //     token: ''
-  //   }
-
+  state = {
+    isLoggedIn: false
+  }
 
   addOrder = () => {
 
@@ -39,6 +36,10 @@ class App extends Component {
       })
   }
 
+  authenticate = () => {
+    this.setState({ isLoggedIn: true })
+  }
+
   render() {
 
     return (
@@ -48,11 +49,18 @@ class App extends Component {
 
 
           <div className="wrapper">
-            
-              <Route exact path="/" render={() => <Login />} />
-              <Route exact path="/Orders" render={() => <Orders />} />
-              <Route exact path="/orders/:id" render={(props) => <Order order={props} />} />
-  
+
+            <Route exact path="/" render={(props) => <Login {...props} />} />
+
+            {localStorage.getItem("token") ?
+              <div>
+                <Route exact path="/Orders" render={(props) => <Orders {...props}/>} />
+                <Route exact path="/orders/:id" render={(props) => <Order order={props} {...props} />} />
+              </div>
+              :
+              null
+            }
+
           </div>
 
         </div>

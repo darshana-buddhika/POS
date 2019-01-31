@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './NavBar.css';
 import App from '../../App';
+import Auth from '../../Auth/Auth'
 
 class NavBar extends Component {
     render() {
@@ -11,11 +12,10 @@ class NavBar extends Component {
 
                     <div className="appName">POS Application</div>
 
-                    <ul>
-                        {/* <li>Home</li> */}
-                        {/* {this.props.logedIn ? <li>Logout</li> : ""} */}
-
-                    </ul>
+                  {
+                      Auth.isAuthenticated ? <button onClick={Auth.signOut} className="navItems">Logout</button> : ""
+                  }
+                    
 
                 </div>
             </div>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './Login.css'
 
 import axios from 'axios'
+import Auth from '../../Auth/Auth';
 
 class Login extends Component {
 
@@ -20,7 +21,9 @@ class Login extends Component {
         if (data.status === 400) {
             this.setState({ error: "*" + data.message })
         } else if (data.status === 200) {
-            localStorage.setItem('token', data.token)
+            
+           Auth.authenticate(data.token)
+           this.props.history.push('/Orders')
         }
     }
 

@@ -1,4 +1,16 @@
-isAuthnticated = () => {
-    console.log("Check weather the use is Authenticated!")
-    localStorage.getItem('token').length !== 0 ? true : false
+
+
+const Auth = {
+    isAuthenticated: false,
+    authenticate(token) {
+        localStorage.setItem('token', token);
+        this.isAuthenticated = true;
+    },
+    signOut() {
+        // this.isAuthenticated = false;
+        localStorage.removeItem('token');
+
+    }
 }
+
+export default Auth

@@ -1,16 +1,18 @@
 .header {
     width: 100%;
-    /* padding: 1rem 0; */
+    display: inline-block;
     background-color: #f37021;
+    overflow: hidden;
   }
 
-  .header ul {
-    /* text-align: right; */
-    display: inline-flex;
-    justify-content: right;
-    padding: 1rem 0;
+  .header .navItems{
+    display: inline-block;
+    /* padding: 1.5rem 1rem; */
   }
 
+  .header .navItems:hover{
+    background: #ccc;
+  }
   .header ul li{
     padding: 1rem;
     display: inline;
@@ -24,10 +26,9 @@
   }
 
   .appName {
-    display: inline-block;
+    display: inline-flex;
     font-size: 25px;
-
-
+    padding: .5rem;
   }
-  
+   
   
