@@ -8,6 +8,8 @@ import NavBar from './Components/NavBar/NavBar'
 import Orders from './Components/Orders/Orders'
 import Order from './Components/Order/Order'
 
+import PrivatRoute, { PrivateRoute } from './Components/PrivateRoute'
+
 class App extends Component {
 
 
@@ -51,14 +53,9 @@ class App extends Component {
           <div className="wrapper">
 
             <Route exact path="/" render={(props) => <Login {...props} />} />
+            <PrivateRoute exact path="/Orders" component={Orders} />} />
+            <PrivateRoute exact path="/orders/:id" component={Order} />} />
 
-            {localStorage.getItem("token") ?
-              <div>
-                <Route exact path="/Orders" render={(props) => <Orders {...props}/>} />
-                <Route exact path="/orders/:id" render={(props) => <Order order={props} {...props} />} />
-              </div>
-              :
-              null
             }
 
           </div>
