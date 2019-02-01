@@ -20,7 +20,8 @@ class Order extends Component {
     }
 
     getOrder = () => {
-        const { match: { params } } = this.props.order;
+        console.log(this.props)
+        const { match: { params } } = this.props;
 
         axios.get(`http://localhost:5000/api/order/${params.id}`, {
             headers: {
@@ -37,7 +38,7 @@ class Order extends Component {
 
     }
     addItem = (item, new_total) => {
-        const { match: { params } } = this.props.order;
+        const { match: { params } } = this.props;
         axios.post(`http://localhost:5000/api/order/${params.id}/addItem`, { item: item, new_total: new_total }, {
             headers: {
                 Authorization: `Bearar ${localStorage.getItem('token')}`
@@ -52,7 +53,7 @@ class Order extends Component {
     }
 
     updateItem = (item, new_total) => {
-        const { match: { params } } = this.props.order;
+        const { match: { params } } = this.props;
         axios.put(`http://localhost:5000/api/order/${params.id}/updateItem`, { item: item, new_total: new_total }, {
             headers: {
                 Authorization: `Bearar ${localStorage.getItem('token')}`
@@ -66,7 +67,7 @@ class Order extends Component {
     }
 
     deleteItem = (item, new_total) => {
-        const { match: { params } } = this.props.order;
+        const { match: { params } } = this.props;
         axios.put(`http://localhost:5000/api/order/${params.id}/deleteItem`, { item: item, new_total: new_total }, {
             headers: {
                 Authorization: `Bearar ${localStorage.getItem('token')}`

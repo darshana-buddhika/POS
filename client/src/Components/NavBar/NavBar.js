@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
+
 
 import './NavBar.css';
 import App from '../../App';
 import Auth from '../../Auth/Auth'
+
+import SignOutButton from '../SignOutButton'
 
 class NavBar extends Component {
     render() {
@@ -12,10 +16,10 @@ class NavBar extends Component {
 
                     <div className="appName">POS Application</div>
 
-                  {
-                      Auth.isAuthenticated ? <button onClick={Auth.signOut} className="navItems">Logout</button> : ""
-                  }
-                    
+                    {
+                        Auth.isAthenticated() ? <SignOutButton/> : ""
+                    }
+
 
                 </div>
             </div>
@@ -23,4 +27,4 @@ class NavBar extends Component {
     }
 }
 
-export default NavBar;
+export default withRouter(NavBar)

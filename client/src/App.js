@@ -7,8 +7,10 @@ import Login from './Components/Login/Login'
 import NavBar from './Components/NavBar/NavBar'
 import Orders from './Components/Orders/Orders'
 import Order from './Components/Order/Order'
+import NoMatch from './Components/NoMatch'
 
 import PrivatRoute, { PrivateRoute } from './Components/PrivateRoute'
+
 
 class App extends Component {
 
@@ -51,13 +53,12 @@ class App extends Component {
 
 
           <div className="wrapper">
-
-            <Route exact path="/" render={(props) => <Login {...props} />} />
-            <PrivateRoute exact path="/Orders" component={Orders} />} />
-            <PrivateRoute exact path="/orders/:id" component={Order} />} />
-
-            }
-
+            <Switch>
+              <Route exact path="/" render={(props) => <Login {...props} />} />
+              <PrivateRoute exact path="/Orders" component={Orders} />
+              <PrivateRoute exact path="/orders/:id" component={Order} />
+              <Route component={NoMatch} />
+            </Switch>
           </div>
 
         </div>

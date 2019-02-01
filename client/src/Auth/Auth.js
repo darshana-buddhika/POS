@@ -1,17 +1,21 @@
-import { withRouter } from 'react-router-dom'
 
 const Auth = {
     isAthenticated() {
-        localStorage.getItem('token') ? true : false
+        if (localStorage.getItem('token')) {
+            return true
+        }
+
+        return false
     },
     authenticate(token) {
-        localStorage.setItem('token') = token
+        localStorage.setItem('token', token)
     },
-    signout() {
+    signout(pr) {
+
         localStorage.removeItem('token')
-        this.props.history.push('/')
+
     }
 }
 
 
-export default withRouter(Auth)
+export default Auth
